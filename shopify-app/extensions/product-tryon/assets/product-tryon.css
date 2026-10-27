@@ -1,0 +1,18 @@
+.ptn { max-width: 520px; margin: 24px 0; padding: 16px; border: 1px solid rgba(128,128,128,.35); border-radius: 12px; }
+.ptn[hidden] { display: none !important; }
+.ptn [hidden] { display: none !important; }
+.ptn-title { margin: 0 0 4px; }
+.ptn-sub, .ptn-status { margin: 4px 0 12px; font-size: 14px; opacity: .85; }
+.ptn-privacy { margin: 12px 0 0; font-size: 12px; opacity: .75; }
+.ptn-consent { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.4; margin: 0 0 12px; }
+.ptn-consent input { margin-top: 3px; flex: 0 0 auto; }
+.ptn-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.ptn-btn { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 1px solid var(--ptn-accent, #111); background: var(--ptn-accent, #111); color: #fff; cursor: pointer; font: inherit; font-size: 14px; }
+.ptn-btn-alt { background: transparent; color: var(--ptn-accent, #111); }
+.ptn-btn[disabled], .ptn-busy .ptn-btn { opacity: .5; pointer-events: none; }
+.ptn-camera { margin: 12px 0; }
+.ptn-video { width: 100%; max-height: 420px; object-fit: cover; border-radius: 8px; background: #000; transform: scaleX(-1); }
+/* The result is shown whole (no cropping), at the shape of the photo that was taken. */
+.ptn-result { display: block; width: 100%; height: auto; border-radius: 8px; background: #eee; }
+.ptn-hint { margin: 0 0 12px; padding: 8px 10px; font-size: 13px; border-radius: 8px; background: rgba(128,128,128,.12); }
+.ptn-keep { display: flex; gap: 8px; align-items: center; font-size: 14px; width: 100%; }

@@ -1,0 +1,24 @@
+# Shopify app config. Fill in client_id and the two URLs, then run:  npx shopify app deploy
+# (Create the app first in the Shopify Dev Dashboard to get the client_id.)
+client_id = "YOUR_CLIENT_ID"
+name = "Product try-on"
+application_url = "https://YOUR-TRYON-SERVER.example.com"
+embedded = false
+
+[access_scopes]
+scopes = "read_products"
+
+[auth]
+redirect_urls = ["https://YOUR-TRYON-SERVER.example.com/auth/callback"]
+
+[webhooks]
+api_version = "2025-07"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled", "products/create", "products/update", "products/delete"]
+  uri = "/webhooks/shopify"
+
+  # Required by Shopify for every app. This service stores no customer data (photos are never kept), so these only acknowledge.
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "/webhooks/shopify"

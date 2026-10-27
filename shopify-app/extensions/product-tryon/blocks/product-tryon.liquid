@@ -1,0 +1,69 @@
+{%- comment -%}
+  Works for any product (wig, hat, beard, glasses, jewellery, ...). Nothing to configure per product:
+  the block sends the store, the product and the variant the shopper has selected, and the server does the rest.
+  Optional: product metafield custom.tryon_category (single line text) forces a category, e.g. hat, hair, beard, glasses.
+{%- endcomment -%}
+{%- assign api = block.settings.api_url | default: 'https://YOUR-TRYON-SERVER.example.com' -%}
+<div class="ptn" id="ptn-{{ block.id }}" {{ block.shopify_attributes }} hidden
+  data-api="{{ api | escape }}"
+  data-shop="{{ shop.permanent_domain | escape }}"
+  data-handle="{{ product.handle | escape }}"
+  data-variant="{{ product.selected_or_first_available_variant.id }}"
+  data-category="{{ product.metafields.custom.tryon_category.value | escape }}"
+  data-label="{{ block.settings.button_label | escape }}"
+  style="--ptn-accent: {{ block.settings.accent }};">
+  <h3 class="ptn-title">{{ block.settings.heading | escape }}</h3>
+  <p class="ptn-sub">{{ block.settings.subheading | escape }}</p>
+  <p class="ptn-hint" hidden></p>
+
+  <label class="ptn-consent">
+    <input type="checkbox" class="ptn-consent-box">
+    <span>This is a photo of me and I'm 18 or over. I understand it is sent to an AI service to make the preview and is not saved.</span>
+  </label>
+
+  <div class="ptn-actions">
+    <label class="ptn-btn"><span class="ptn-btn-label">{{ block.settings.button_label | escape }}</span>
+      <input type="file" accept="image/*" class="ptn-file" hidden>
+    </label>
+    <button type="button" class="ptn-btn ptn-btn-alt ptn-selfie">Take selfie</button>
+    <input type="file" accept="image/*" capture="user" class="ptn-file ptn-selfie-file" hidden>
+  </div>
+
+  <div class="ptn-camera" hidden>
+    <video class="ptn-video" autoplay playsinline muted></video>
+    <div class="ptn-actions">
+      <button type="button" class="ptn-btn ptn-snap">Capture</button>
+      <button type="button" class="ptn-btn ptn-btn-alt ptn-cam-close">Cancel</button>
+    </div>
+  </div>
+
+  <p class="ptn-status" role="status" aria-live="polite"></p>
+  <button type="button" class="ptn-btn ptn-btn-alt ptn-anyway" hidden>Try anyway with this photo</button>
+
+  <div class="ptn-stage" hidden>
+    <img class="ptn-result" alt="Preview of this product on you">
+    <div class="ptn-actions">
+      <label class="ptn-keep" hidden><input type="checkbox" class="ptn-keepface" checked> Keep my real face exactly as in my photo</label>
+      <button type="button" class="ptn-btn ptn-btn-alt ptn-toggle">Show my original photo</button>
+      <button type="button" class="ptn-btn ptn-regen" hidden>Preview this option</button>
+      <button type="button" class="ptn-btn ptn-btn-alt ptn-download">Download</button>
+    </div>
+  </div>
+  <p class="ptn-privacy">Previews are AI-made and approximate: colour, size and fit will differ a little from the real product.</p>
+</div>
+
+{% schema %}
+{
+  "name": "Product try-on",
+  "target": "section",
+  "stylesheet": "product-tryon.css",
+  "javascript": "product-tryon.js",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Try it on" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Add a front-facing photo to see this on you." },
+    { "type": "text", "id": "button_label", "label": "Button text", "default": "Choose photo" },
+    { "type": "color", "id": "accent", "label": "Accent color", "default": "#111111" },
+    { "type": "text", "id": "api_url", "label": "Try-on server URL", "info": "Leave empty to use the address built into the app. Only change it if you host your own server." }
+  ]
+}
+{% endschema %}
